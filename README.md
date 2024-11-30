@@ -1,13 +1,13 @@
 <h1 id="Top">✌AlgoViz's Doc✌</h1>
 
----
+<br><br>
 
 ## 使用技術 
 <p style="display: inline">
     <img src="https://img.shields.io/badge/-Rust-000000.svg?logo=rust&style=flat-square">
 </p>
 
----
+<br><br>
 
 ## 開発環境セットアップ
 
@@ -21,7 +21,7 @@ git clone https://github.com/twil3akine/AlgoViz.git
 git clone git@github.com:twil3akine/AlgoViz
 ```
 
----
+<br><br>
 
 ## 使用方法(ver. 0.5.α)
 
@@ -53,7 +53,7 @@ Use ↑ or ↓ to move, Enter to select:
 
 上記で実行されます。(初回時のみ、コンパイルが生じるので、待ち時間が長くなると予想されます。ご了承くださいm(_ _)m)
 
----
+<br><br>
 
 ## 不具合やリクエストのお問い合わせ
 `Issue`を送ってください。
