@@ -1,6 +1,8 @@
 <h1 id="Top">✌AlgoViz's Doc✌</h1>
 
-## 使用技術 
+<br>
+
+## 使用技術
 <p style="display: inline">
     <img src="https://img.shields.io/badge/-Rust-000000.svg?logo=rust&style=flat-square">
 </p>
@@ -9,7 +11,7 @@
 
 ## 開発環境セットアップ
 
-リポジトリ(https://github.com/twil3akine/algoviz)をクローン
+リポジトリ (https://github.com/twil3akine/algoviz) をクローン
 
 ```bash
 # sshを使用しない場合
