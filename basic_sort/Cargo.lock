@@ -52,7 +52,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "binsec_viz"
+name = "basic_sort"
 version = "0.1.0"
 dependencies = [
  "clap",

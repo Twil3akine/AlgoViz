@@ -4,6 +4,12 @@
 options=("Bubble" "Choose" "Insert" "Quit")
 current=0  # 現在の選択位置
 
+# step_by_stepの確認
+step_by_step=""
+if [[ " $@ " =~ " -s " || " $@ " =~ " --step_by_step " ]]; then
+    step_by_step="-s"
+fi
+
 # 選択肢を表示する関数
 draw_menu() {
     clear
@@ -44,7 +50,7 @@ while true; do
             if [ "${options[current]}" == "Quit" ]; then
                 exit 0
             else
-                cargo run -- -- "${options[current]}"
+                cargo run -- "${options[current]}" $step_by_step
                 
                 echo
             fi
