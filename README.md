@@ -56,4 +56,4 @@ Use ↑ or ↓ to move, Enter to select:
 <br>
 
 ## 不具合やリクエストのお問い合わせ
-`Issue`を送ってください。
+お手数をおかけしますが、`Issue`からお問い合わせくださいませ。
