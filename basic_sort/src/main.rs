@@ -1,9 +1,14 @@
 use rand::{Rng, thread_rng};
 use clap::Parser;
+use std::io;
 
 #[derive(Parser)]
 struct Args {
+    #[clap(help="Sort type (Bubble, Choose, Insert")]
     sort_type: String,
+
+    #[clap(short='s', long="step_by_step", help="Enable step-by-step mode")]
+    step_by_step: bool,
 }
 
 // 線を引く
@@ -16,7 +21,7 @@ fn line(idx: usize) -> () {
 }
 
 // マスの出力
-fn grid(vec: &Vec<u32>, idx: usize, highlight: Option<(usize, usize)>) -> () {
+fn grid(vec: &Vec<u8>, idx: usize, highlight: Option<(usize, usize)>) -> () {
 
     line(idx);
 
@@ -41,7 +46,15 @@ fn grid(vec: &Vec<u32>, idx: usize, highlight: Option<(usize, usize)>) -> () {
 }
 
 // ソート実行
-fn sort(vec: &mut Vec<u32>, idx: usize, method: &str) -> () {
+fn sort(vec: &mut Vec<u8>, idx: usize, method: &str, step_by_step: bool) -> () {
+    let wait_for_enter = || {
+        if step_by_step {
+            println!("please push 'Enter' for next.");
+            let mut input = String::new();
+            io::stdin().read_line(&mut input).expect("please push 'Enter'");
+        }
+    };
+
     match method {
         "Bubble" => {
             for i in 0..idx {
@@ -49,6 +62,7 @@ fn sort(vec: &mut Vec<u32>, idx: usize, method: &str) -> () {
                     if vec[j]>vec[j+1] {
                         vec.swap(j, j+1);
                         grid(vec, idx, Some((j,j+1)));
+                        wait_for_enter();
                     }
                     else { 
                         continue; 
@@ -67,12 +81,13 @@ fn sort(vec: &mut Vec<u32>, idx: usize, method: &str) -> () {
                 }
                 vec.swap(i, mx);
                 grid(vec, idx, Some((i,mx)));
+                wait_for_enter();
             }
         }
 
         "Insert" => {
             for i in 1..idx+1 {
-                let key: u32 = vec[i];
+                let key: u8 = vec[i];
                 let mut j: usize = i;
                 while j > 0 && vec[j-1] > key {
                     vec[j] = vec[j-1];
@@ -80,6 +95,7 @@ fn sort(vec: &mut Vec<u32>, idx: usize, method: &str) -> () {
                 }
                 vec[j] = key;
                 grid(vec, idx, Some((j,j)));
+                wait_for_enter();
             }
         }
 
@@ -92,13 +108,13 @@ fn main() {
     let args = Args::parse();
 
     let idx: usize = rng.gen_range(7..=10);
-    let mut vec: Vec<u32> = (0..=idx).map(|_| rng.gen_range(0..=100)).collect();
+    let mut vec: Vec<u8> = (0..=idx).map(|_| rng.gen_range(0..=100)).collect();
 
     println!("\nInitial Array:");
     grid(&vec, idx, None);
     println!();
 
-    sort(&mut vec, idx, &args.sort_type);
+    sort(&mut vec, idx, &args.sort_type, args.step_by_step);
 
     println!("\nSorted Array:");
     grid(&vec, idx, None);

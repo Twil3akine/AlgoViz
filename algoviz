@@ -1,0 +1,91 @@
+#!/usr/bin/bash
+
+# 選択肢のリスト
+options=("Basic_Sorts" "Segment_Tree" "Quit")
+current=0  # 現在の選択位置
+
+draw_menu() {
+    clear
+    echo "Use ↑ or ↓ to move, Enter to select:"
+    for i in "${!options[@]}"; do
+        if [ "$i" -eq "$current" ]; then
+            echo -e "> \033[32m${options[i]}\033[0m"  # 緑色で強調表示
+        else
+            echo "  ${options[i]}"
+        fi
+    done
+}
+
+# step_by_stepの確認
+step_by_step=""
+for arg in "$@"; do
+    case "$arg" in 
+        -h|--help)
+            echo "Usage: $(basename "$0") [OPTIONS]"
+            echo "  -h, --help           Show this help message and exit"
+            echo "  -s, --step_by_step   Run in step-by-step mode"
+            exit 0
+            ;;
+        -s|--step_by_step)
+            step_by_step="-s"
+            ;;
+        *)
+            echo "Error: Unknown option '$arg'"
+            exit 1
+            ;;
+    esac
+done
+
+while true; do
+    draw_menu
+
+    # キー入力を取得
+    read -s -n3 key
+
+    case "$key" in
+        $'\e[A')  # 上矢印
+            ((current--))
+            if [ "$current" -lt 0 ]; then
+                current=$((${#options[@]} - 1))
+            fi
+            ;;
+        $'\e[B')  # 下矢印
+            ((current++))
+            if [ "$current" -ge "${#options[@]}" ]; then
+                current=0
+            fi
+            ;;
+        "")  # Enterキー
+            echo
+            echo "You selected: ${options[current]}"
+            echo
+
+            case "${options[current]}" in
+                "Quit")
+                    exit 0
+                    ;;
+                "Basic_Sorts")
+                    if [ -d "basic_sort" ]; then
+                        (cd basic_sort && ./basic_sort.sh $step_by_step) || echo "Error: Failed to execute basic_sort"
+                        exit 0
+                    else
+                        echo "Error: Directory 'basic_sort' does not exist"
+                        exit 1
+                    fi
+                    ;;
+                "Segment_Tree")
+                    if [ -d "segment_tree" ]; then
+                        (cd segment_tree && ./segment_tree.sh $step_by_step) || echo "Error: Failed to execute segment_tree"
+                        exit 0
+                    else
+                        echo "Error: Directory 'segment_tree' does not exist"
+                        exit 1
+                    fi
+                    ;;
+                *)
+                    echo "Error: Unknown option '${options[current]}'"
+                    exit 1
+                    ;;
+            esac
+    esac
+done

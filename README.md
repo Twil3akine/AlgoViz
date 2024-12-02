@@ -32,9 +32,9 @@ cd ./algoviz/basic_sort
 
 <br>
 
-2. `./sort.sh`を実行
+2. `./basic_sort.sh`を実行
 ```bash
-./sort.sh
+./basic_sort.sh
 ```
 
 <br>
