@@ -108,7 +108,7 @@ fn main() {
     let args = Args::parse();
 
     let idx: usize = rng.gen_range(7..=10);
-    let mut vec: Vec<u8> = (0..=idx).map(|_| rng.gen_range(0..=100)).collect();
+    let mut vec: Vec<u8> = (0..=idx).map(|_| rng.gen_range(0..100)).collect();
 
     println!("\nInitial Array:");
     grid(&vec, idx, None);
