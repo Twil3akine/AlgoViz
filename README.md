@@ -1,17 +1,17 @@
 <h1 id="Top">✌AlgoViz's Doc✌</h1>
 
-<br><br>
+<br>
 
-## 使用技術 
+## 使用技術
 <p style="display: inline">
     <img src="https://img.shields.io/badge/-Rust-000000.svg?logo=rust&style=flat-square">
 </p>
 
-<br><br>
+<br>
 
 ## 開発環境セットアップ
 
-リポジトリ(https://github.com/twil3akine/algoviz)をクローン
+リポジトリ (https://github.com/twil3akine/algoviz) をクローン
 
 ```bash
 # sshを使用しない場合
@@ -53,7 +53,7 @@ Use ↑ or ↓ to move, Enter to select:
 
 上記で実行されます。(初回時のみ、コンパイルが生じるので、待ち時間が長くなると予想されます。ご了承くださいm(_ _)m)
 
-<br><br>
+<br>
 
 ## 不具合やリクエストのお問い合わせ
-`Issue`を送ってください。
+お手数をおかけしますが、`Issue`からお問い合わせくださいませ。
