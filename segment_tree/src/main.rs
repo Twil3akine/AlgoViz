@@ -25,18 +25,32 @@ impl SegmentTree {
     }
 
     fn show(&self, idx: Option<usize>) -> () {
+        // 何個目のノードを示すか
         let mut start: usize = 0;
         let mut end: usize;
-        let mut width: usize = 2*self.node+1;
+        // ノード幅 15 7 3 1
+        let mut width: usize = 2 * self.node + 1;
         let mut spaces: String;
-        // 15 7 3 1
+        
+        // 2の累乗の深さを計算（log2(self.node + 1) の結果）
+        let mut cnt: u32 = ((self.node + 1) as f64).log2() as u32;
+    
         while start < self.data.len() {
-            end = start + (start+1).next_power_of_two();
-            spaces= " ".repeat(width);
-
+            end = start + (start + 1).next_power_of_two();
+            spaces = " ".repeat(width);
             for i in start..end.min(self.data.len()) {
+                // idxv = node内のindex
                 if let Some(idxv) = idx {
-                    if self.data[i] == self.data[idxv+self.node] {
+                    // ノードとその親要素をハイライト
+                    // idxv + self.node は対象のノードのインデックス
+                    // cnt はノードの深さ（log2に基づく）
+                    let mut parent_idx: usize = idxv + self.node;
+                    for _ in 0..cnt {
+                        parent_idx = (parent_idx-1)/2
+                    }
+    
+                    // iが対象のノードまたは親ノードであれば色を付ける
+                    if self.data[i] == self.data[idxv + self.node] && i == parent_idx {
                         print!("{}\x1b[32m{:>2}\x1b[0m{}", spaces, self.data[i], spaces);
                         continue;
                     }
@@ -47,13 +61,14 @@ impl SegmentTree {
             
             width /= 2;
             start = end;
+            cnt = cnt.saturating_sub(1); // cntが負にならないようにsaturating_subを使用
             if width == 0 {
                 break;
             }
         }
         println!("\n");
     }
-
+    
     fn build(&mut self, vals: &[i32], step_by_step: bool) { // vals: &slice <i32>
         println!("Initial Segment Tree:\n");
         self.show(None);
@@ -61,8 +76,8 @@ impl SegmentTree {
         for (i, &v) in vals.iter().enumerate() {
             self.update(i, v);
 
+            self.show(Some(i));
             if step_by_step {
-                self.show(Some(i));
                 println!("please push 'Enter' for next.");
                 let mut input = String::new();
                 io::stdin().read_line(&mut input).expect("please push 'Enter'");
@@ -99,7 +114,7 @@ fn main() {
     let mut vec: Vec<i32> = Vec::new();
     
     for _ in 0..node {
-        vec.push(rng.gen_range(1..100));
+        vec.push(rng.gen_range(1..10));
     }
 
     let mut segment_tree = SegmentTree::new(vec.len(), 0);
