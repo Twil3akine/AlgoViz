@@ -2,12 +2,17 @@
 
 <br>
 
+## AlgoVizについて
+TUIで動くアルゴリズム可視化ソフトウェアです。純Rust製です。動作には`Cargo`が必要です。
+
+<br>
+
 ## 使用技術
 <p style="display: inline">
     <img src="https://img.shields.io/badge/-Rust-000000.svg?logo=rust&style=flat-square">
 </p>
 
-<br>
+<br><br>
 
 ## 開発環境セットアップ
 
@@ -21,25 +26,33 @@ git clone https://github.com/twil3akine/AlgoViz.git
 git clone git@github.com:twil3akine/AlgoViz
 ```
 
-<br><br>
+<br>
 
-## 使用方法(ver. 0.5.α)
+## 使用方法(ver. X.X.X)
 
-1. `./algoviz/basic_sort`ディレクトリに移動
+1. `./algoviz`ディレクトリに移動
 ```bash
-cd ./algoviz/basic_sort
+cd ./algoviz
 ```
 
 <br>
 
-2. `./basic_sort.sh`を実行
+2. `./algoviz`を実行。`-s`オプションで逐次実行、`-h`オプションでヘルプが表示されます。
 ```bash
-./basic_sort.sh
+./algoviz
 ```
 
 <br>
 
-3. ソートの種類(バブル、選択、挿入または中止)が表示されるので、↑↓で選択して`Enter`
+3. 実装されているアルゴリズム(現在は基本ソート3種とセグメント木(開発中))が表示されるので、↑↓で選択して`Enter`
+```bash
+Use ↑ or ↓ to move, Enter to select:
+> Basic_Sort
+  Segment_Tree
+  Quit
+```
+
+4. I. Basic_Sort選択時: ソートの種類(バブル、選択、挿入または中止)が表示されるので、↑↓で選択して`Enter`
 ```bash
 Use ↑ or ↓ to move, Enter to select:
 > Bubble
@@ -48,10 +61,12 @@ Use ↑ or ↓ to move, Enter to select:
   Quit
 ```
 
+4. II. Segmen_Tree選択時: そのまま実行されます。
+
 <br>
 
 
-上記で実行されます。(初回時のみ、コンパイルが生じるので、待ち時間が長くなると予想されます。ご了承くださいm(_ _)m)
+(初回時のみ、コンパイルが生じるので、待ち時間が長くなると予想されます。ご了承くださいm(_ _)m)
 
 <br>
 
