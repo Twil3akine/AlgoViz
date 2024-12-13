@@ -9,14 +9,16 @@ struct Args {
 }
 
 struct SegmentTree {
+    // 葉以外
     node: usize,
     data: Vec<i32>,
     default: i32,
 }
 
+// RMQ-SegmentTree
 impl SegmentTree {
     fn new(size: usize, default: i32) -> Self {
-        let node = size.next_power_of_two()-1;
+        let node: usize = size.next_power_of_two()-1;
         SegmentTree {
             node,
             data: vec![default; 2*node+1],
@@ -69,7 +71,7 @@ impl SegmentTree {
         println!("\n");
     }
     
-    fn build(&mut self, vals: &[i32], step_by_step: bool) { // vals: &slice <i32>
+    fn build(&mut self, vals: &[i32], step_by_step: bool) -> () { // vals: &slice <i32>
         println!("Initial Segment Tree:\n");
         self.show(None);
 
@@ -88,7 +90,7 @@ impl SegmentTree {
         self.show(None);
     }
 
-    fn update(&mut self, mut idx: usize, val: i32) {
+    fn update(&mut self, mut idx: usize, val: i32) -> () {
         idx += self.node;
         self.data[idx] = val;
         while idx > 0 {
@@ -104,6 +106,34 @@ impl SegmentTree {
             }
         }
     }
+
+    // RMQ
+    fn query(&mut self, lidx: usize, ridx: usize, index: Option<usize>, left: Option<usize>, right: Option<usize>) -> i32 {
+        if self.data.len() <= ridx {
+            panic!("Invaild index.")
+        }
+
+        let index: usize = index.unwrap_or(0);
+        let left: usize = left.unwrap_or(0);
+        let right: usize = right.unwrap_or(self.node);
+        
+        if lidx == ridx {
+            return self.data[self.node+lidx];
+        }
+
+        if ridx < left || right < lidx {
+            return self.default;
+        }
+        if lidx <= left && right <= ridx {
+            return self.data[index];
+        }
+
+        let mid: usize = (left+right)/2;
+        let lval = self.query(lidx, ridx, Some(2*index+1), Some(left), Some(mid));
+        let rval = self.query(lidx, ridx, Some(2*index+2), Some(mid+1), Some(right));
+
+        lval.max(rval)
+    }
 }
 
 fn main() {
@@ -111,13 +141,21 @@ fn main() {
     let args = Args::parse();
 
     let node: u32 = rng.gen_range(5..=16);
-    let mut vec: Vec<i32> = Vec::new();
+    let mut vec: Vec<i32> = vec![0; node.next_power_of_two() as usize];
     
-    for _ in 0..node {
-        vec.push(rng.gen_range(1..10));
+    for i in 0..node as usize {
+        vec[i] = rng.gen_range(1..100);
     }
 
     let mut segment_tree = SegmentTree::new(vec.len(), 0);
 
     segment_tree.build(&vec, args.step_by_step);
+
+    for _i in 0..rng.gen_range(2..=5) {
+        let left: usize = rng.gen_range(0..node.next_power_of_two() as usize);
+        let right: usize = rng.gen_range(left..node.next_power_of_two() as usize);
+        let rlt: i32 = segment_tree.query(left, right, None, None, None);
+
+        println!(" Left: {}\nRight: {}\n\nQuery Value: {}\n", left+1, right+1, rlt);
+    }
 }
