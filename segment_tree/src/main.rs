@@ -8,6 +8,10 @@ struct Args {
     step_by_step: bool,
 }
 
+fn print_line() -> () {
+    println!("\n--------------------\n");
+}
+
 struct SegmentTree {
     // 葉以外
     node: usize,
@@ -156,6 +160,9 @@ fn main() {
         let right: usize = rng.gen_range(left..node.next_power_of_two() as usize);
         let rlt: i32 = segment_tree.query(left, right, None, None, None);
 
-        println!(" Left: {}\nRight: {}\n\nQuery Value: {}\n", left+1, right+1, rlt);
+        print_line();
+
+        println!(" Left: {}\nRight: {}\n\nQuery Value: {}", left+1, right+1, rlt);
     }
+    print_line();
 }
